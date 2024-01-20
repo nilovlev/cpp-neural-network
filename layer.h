@@ -6,7 +6,7 @@
 using Eigen::VectorXd;
 using Eigen::MatrixXd;
 
-const double h = -2;
+const double h = 2;
 
 class Layer {
  public:

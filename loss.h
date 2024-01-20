@@ -19,7 +19,7 @@ public:
   }
 
   static VectorXd MSEGrad(VectorXd y_pred, VectorXd y_true) {
-    VectorXd grad = (y_pred - y_true) * -2 / y_pred.rows();
+    VectorXd grad = (y_pred - y_true) * 2 / y_pred.rows();
     return grad;
   }
 };
