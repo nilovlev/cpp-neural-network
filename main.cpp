@@ -52,7 +52,7 @@ int main() {
   Layer layer1 = Layer(input_values_length, layer1_values_length);
   Layer layer2 = Layer(layer1_values_length, final_values_length);
 
-  auto data = get_layer0_values("data/mnist_train.csv");
+  auto data = get_layer0_values("mnist/mnist_train.csv");
   for (int i = 0; i < data.size(); ++i) {
     if (i >= epochs) {
       break;
@@ -78,7 +78,7 @@ int main() {
   }
 
   int right_answers_count = 0;
-  data = get_layer0_values("data/mnist_test.csv");
+  data = get_layer0_values("mnist/mnist_test.csv");
   for (int i = 0; i < data.size(); ++i) {
 
     VectorXd layer0_values = data[i].first;
