@@ -2,6 +2,7 @@
 
 #include "layer.h"
 #include "loss.h"
+#include "load_data.h"
 
 #include <iostream>
 #include <vector>
@@ -10,14 +11,13 @@ namespace neural_network {
 
 class NeuralNetwork {
  private:
-  int epochs_ = 60000;
-  Layer layer1_;
-  Layer layer2_;
-  std::vector<std::pair<VectorXd, int>> trainData_;
-  std::vector<std::pair<VectorXd, int>> testData_;
+  int epochs_;
+  std::vector<Layer> layers_;
+  std::vector<Data> trainData_;
+  std::vector<Data> testData_;
 
  public:
-  NeuralNetwork(std::vector<std::pair<VectorXd, int>> trainData, std::vector<std::pair<VectorXd, int>> testData);
+  NeuralNetwork(std::vector<int> layerLenghts, int epochs, std::vector<Data> trainData, std::vector<Data> testData);
 
   void train();
   void test();
