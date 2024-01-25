@@ -1,11 +1,11 @@
 #pragma once
 
-#include "layer.h"
-#include "loss.h"
-#include "load_data.h"
-
 #include <iostream>
 #include <vector>
+
+#include "layer.h"
+#include "load_data.h"
+#include "loss.h"
 
 namespace neural_network {
 
@@ -17,10 +17,11 @@ class NeuralNetwork {
   std::vector<Data> testData_;
 
  public:
-  NeuralNetwork(std::vector<int> layerLenghts, int epochs, std::vector<Data> trainData, std::vector<Data> testData);
+  NeuralNetwork(std::vector<int> layerLenghts, int epochs, std::vector<Data> trainData,
+                std::vector<Data> testData);
 
   void train();
   void test();
 };
 
-}
+}  // namespace neural_network

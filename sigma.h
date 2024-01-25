@@ -16,4 +16,4 @@ class Sigma {
   static VectorXd evaluateDerivative(VectorXd x);
 };
 
-}
+}  // namespace neural_network

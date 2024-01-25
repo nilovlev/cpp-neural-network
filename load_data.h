@@ -1,10 +1,10 @@
 #pragma once
 
-#include <iostream>
-#include <fstream>
-#include <vector>
-#include <string>
 #include <Eigen/Dense>
+#include <fstream>
+#include <iostream>
+#include <string>
+#include <vector>
 
 namespace neural_network {
 
@@ -20,4 +20,4 @@ class LoadData {
   static std::vector<Data> getStartLayerValues(std::string fileName, int startLayerLength);
 };
 
-}
+}  // namespace neural_network

@@ -16,4 +16,4 @@ class LossFunction {
   static VectorXd MSEGrad(VectorXd y_pred, VectorXd y_true);
 };
 
-}
+}  // namespace neural_network

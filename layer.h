@@ -1,15 +1,15 @@
 #pragma once
 
-#include "sigma.h"
-
+#include <Eigen/Dense>
 #include <cmath>
 #include <random>
-#include <Eigen/Dense>
+
+#include "sigma.h"
 
 namespace neural_network {
 
-using Eigen::VectorXd;
 using Eigen::MatrixXd;
+using Eigen::VectorXd;
 
 const double learningRate = 2;
 
@@ -28,4 +28,4 @@ class Layer {
   void shift(VectorXd x, VectorXd u);
 };
 
-}
+}  // namespace neural_network

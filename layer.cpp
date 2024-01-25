@@ -17,9 +17,7 @@ Layer::Layer(int n, int m) {
   }
 }
 
-VectorXd Layer::evaluate(VectorXd x) {
-  return Sigma::evaluate(a * x + b);
-}
+VectorXd Layer::evaluate(VectorXd x) { return Sigma::evaluate(a * x + b); }
 
 MatrixXd Layer::gradA(VectorXd x, VectorXd u) {
   return Sigma::evaluateDerivative(a * x + b).asDiagonal() * u * x.transpose();
@@ -38,4 +36,4 @@ void Layer::shift(VectorXd x, VectorXd u) {
   b -= learningRate * gradB(x, u);
 }
 
-}
+}  // namespace neural_network

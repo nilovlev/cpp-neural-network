@@ -33,4 +33,4 @@ std::vector<Data> LoadData::getStartLayerValues(std::string fileName, int startL
   return res;
 }
 
-}
+}  // namespace neural_network

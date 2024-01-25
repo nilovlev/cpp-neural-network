@@ -2,9 +2,7 @@
 
 namespace neural_network {
 
-double LossFunction::evaluate(VectorXd y_pred, VectorXd y_true) {
-  return MSE(y_pred, y_true);
-}
+double LossFunction::evaluate(VectorXd y_pred, VectorXd y_true) { return MSE(y_pred, y_true); }
 
 VectorXd LossFunction::evaluateGrad(VectorXd y_pred, VectorXd y_true) {
   return MSEGrad(y_pred, y_true);
@@ -20,4 +18,4 @@ VectorXd LossFunction::MSEGrad(VectorXd y_pred, VectorXd y_true) {
   return grad;
 }
 
-}
+}  // namespace neural_network
