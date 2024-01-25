@@ -31,5 +31,12 @@
 *.out
 *.app
 
+#CMake files
+*.cmake
+CMakeCache.txt
+Makefile
+Neural_Network
+/CMakeFiles
+
 eigen-3.4.0/
 .vscode/
