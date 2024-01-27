@@ -22,8 +22,8 @@ void NeuralNetwork::train() {
 
     VectorXd startLayerValues = trainData_[i].pixels;
     int ans = trainData_[i].answer;
-    VectorXd ans_vector = VectorXd::Zero(10);
-    ans_vector[ans] = 1;
+    VectorXd ansVector = VectorXd::Zero(10);
+    ansVector[ans] = 1;
 
     std::vector<VectorXd> layerValues = std::vector<VectorXd>(layers_.size() + 1);
     layerValues[0] = startLayerValues;
@@ -32,7 +32,7 @@ void NeuralNetwork::train() {
       layerValues[i + 1] = layers_[i].evaluate(layerValues[i]);
     }
 
-    VectorXd lastLayerU = LossFunction::evaluateGrad(layerValues[layers_.size()], ans_vector);
+    VectorXd lastLayerU = LossFunction::evaluateGrad(layerValues[layers_.size()], ansVector);
 
     MatrixXd currentU = lastLayerU;
     for (int i = layers_.size() - 1; i >= 0; --i) {
@@ -47,19 +47,19 @@ void NeuralNetwork::test() {
   for (int i = 0; i < testData_.size(); ++i) {
     VectorXd startLayerValues = testData_[i].pixels;
     int ans = testData_[i].answer;
-    VectorXd ans_vector = VectorXd::Zero(10);
-    ans_vector[ans] = 1;
+    VectorXd ansVector = VectorXd::Zero(10);
+    ansVector[ans] = 1;
 
     VectorXd currentLayerValues = startLayerValues;
     for (int i = 0; i < layers_.size(); ++i) {
       currentLayerValues = layers_[i].evaluate(currentLayerValues);
     }
 
-    double maxVal = 0;
+    double maxValue = 0;
     int maxIndex = -1;
     for (int i = 0; i < currentLayerValues.rows(); ++i) {
-      if (currentLayerValues(i) > maxVal) {
-        maxVal = currentLayerValues(i);
+      if (currentLayerValues(i) > maxValue) {
+        maxValue = currentLayerValues(i);
         maxIndex = i;
       }
     }

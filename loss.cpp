@@ -2,19 +2,19 @@
 
 namespace neural_network {
 
-double LossFunction::evaluate(VectorXd y_pred, VectorXd y_true) { return MSE(y_pred, y_true); }
+double LossFunction::evaluate(VectorXd yPred, VectorXd yTrue) { return MSE(yPred, yTrue); }
 
-VectorXd LossFunction::evaluateGrad(VectorXd y_pred, VectorXd y_true) {
-  return MSEGrad(y_pred, y_true);
+VectorXd LossFunction::evaluateGrad(VectorXd yPred, VectorXd yTrue) {
+  return MSEGrad(yPred, yTrue);
 }
 
-double LossFunction::MSE(VectorXd y_pred, VectorXd y_true) {
-  VectorXd diff = (y_pred - y_true).unaryExpr([](double x) { return x * x; });
+double LossFunction::MSE(VectorXd yPred, VectorXd yTrue) {
+  VectorXd diff = (yPred - yTrue).unaryExpr([](double x) { return x * x; });
   return diff.mean();
 }
 
-VectorXd LossFunction::MSEGrad(VectorXd y_pred, VectorXd y_true) {
-  VectorXd grad = (y_pred - y_true) * 2 / y_pred.rows();
+VectorXd LossFunction::MSEGrad(VectorXd yPred, VectorXd yTrue) {
+  VectorXd grad = (yPred - yTrue) * 2 / yPred.rows();
   return grad;
 }
 
