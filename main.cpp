@@ -9,8 +9,8 @@ int main() {
   std::vector<int> layerLengths = {startLayerLength, 16, 10};
   neural_network::NeuralNetwork network = neural_network::NeuralNetwork(
       layerLengths, 60000,
-      neural_network::LoadData::getStartLayerValues("mnist/mnist_train.csv", startLayerLength),
-      neural_network::LoadData::getStartLayerValues("mnist/mnist_test.csv", startLayerLength));
+      neural_network::LoadData::getStartLayerValues("../mnist/mnist_train.csv", startLayerLength),
+      neural_network::LoadData::getStartLayerValues("../mnist/mnist_test.csv", startLayerLength));
 
   network.train();
   network.test();

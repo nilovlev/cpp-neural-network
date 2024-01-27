@@ -2,7 +2,11 @@
 
 How to run:
 
-`cmake .`
+`mkdir build`
+
+`cd build`
+
+`cmake ..`
 
 `make`
 
