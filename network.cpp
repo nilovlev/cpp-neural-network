@@ -55,14 +55,8 @@ void NeuralNetwork::test() {
       currentLayerValues = layers_[i].evaluate(currentLayerValues);
     }
 
-    double maxValue = 0;
-    int maxIndex = -1;
-    for (int i = 0; i < currentLayerValues.rows(); ++i) {
-      if (currentLayerValues(i) > maxValue) {
-        maxValue = currentLayerValues(i);
-        maxIndex = i;
-      }
-    }
+    MatrixXd::Index maxIndex;
+    currentLayerValues.maxCoeff(&maxIndex);
 
     if (maxIndex == ans) {
       ++rightAnswersCount;
