@@ -2,7 +2,7 @@
 
 namespace neural_network {
 
-std::vector<Data> LoadData::getStartLayerValues(std::string fileName, int startLayerLength) {
+std::vector<Data> LoadData::getStartLayerValues(const std::string& fileName, int startLayerLength) {
   std::vector<Data> res = std::vector<Data>();
   std::ifstream file(fileName);
   std::string line, val;
@@ -10,7 +10,7 @@ std::vector<Data> LoadData::getStartLayerValues(std::string fileName, int startL
   std::getline(file, line);
 
   while (std::getline(file, line)) {
-    VectorXd vector = VectorXd(startLayerLength);
+    Vector vector = Vector(startLayerLength);
     std::stringstream ss(line);
 
     int index = -1;

@@ -1,23 +1,22 @@
 #pragma once
 
-#include <Eigen/Dense>
 #include <fstream>
 #include <iostream>
 #include <string>
 #include <vector>
 
+#include "common.h"
+
 namespace neural_network {
 
-using Eigen::VectorXd;
-
 struct Data {
-  VectorXd pixels;
+  Vector pixels;
   int answer;
 };
 
 class LoadData {
  public:
-  static std::vector<Data> getStartLayerValues(std::string fileName, int startLayerLength);
+  static std::vector<Data> getStartLayerValues(const std::string& fileName, int startLayerLength);
 };
 
 }  // namespace neural_network

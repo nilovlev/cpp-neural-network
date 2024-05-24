@@ -1,6 +1,5 @@
 #pragma once
 
-#include <iostream>
 #include <vector>
 
 #include "layer.h"
@@ -17,8 +16,8 @@ class NeuralNetwork {
   std::vector<Data> testData_;
 
  public:
-  NeuralNetwork(std::vector<int> layerLenghts, int epochs, std::vector<Data> trainData,
-                std::vector<Data> testData);
+  NeuralNetwork(const std::vector<int>& layerLenghts, int epochs,
+                const std::vector<Data>& trainData, const std::vector<Data>& testData);
 
   void train();
   void test();

@@ -1,19 +1,17 @@
 #pragma once
 
-#include <Eigen/Dense>
+#include "common.h"
 
 namespace neural_network {
 
-using Eigen::VectorXd;
-
 class LossFunction {
  public:
-  static double evaluate(VectorXd yPred, VectorXd yTrue);
-  static VectorXd evaluateGrad(VectorXd yPred, VectorXd yTrue);
+  static double evaluate(const Vector& yPred, const Vector& yTrue);
+  static Vector evaluateGrad(const Vector& yPred, const Vector& yTrue);
 
  private:
-  static double MSE(VectorXd yPred, VectorXd yTrue);
-  static VectorXd MSEGrad(VectorXd yPred, VectorXd yTrue);
+  static double func(const Vector& yPred, const Vector& yTrue);
+  static Vector funcGrad(const Vector& yPred, const Vector& yTrue);
 };
 
 }  // namespace neural_network

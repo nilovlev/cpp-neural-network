@@ -2,20 +2,20 @@
 
 namespace neural_network {
 
-double LossFunction::evaluate(VectorXd yPred, VectorXd yTrue) { return MSE(yPred, yTrue); }
-
-VectorXd LossFunction::evaluateGrad(VectorXd yPred, VectorXd yTrue) {
-  return MSEGrad(yPred, yTrue);
+double LossFunction::evaluate(const Vector& yPred, const Vector& yTrue) {
+  return func(yPred, yTrue);
 }
 
-double LossFunction::MSE(VectorXd yPred, VectorXd yTrue) {
-  VectorXd diff = (yPred - yTrue).unaryExpr([](double x) { return x * x; });
-  return diff.mean();
+Vector LossFunction::evaluateGrad(const Vector& yPred, const Vector& yTrue) {
+  return funcGrad(yPred, yTrue);
 }
 
-VectorXd LossFunction::MSEGrad(VectorXd yPred, VectorXd yTrue) {
-  VectorXd grad = (yPred - yTrue) * 2 / yPred.rows();
-  return grad;
+double LossFunction::func(const Vector& yPred, const Vector& yTrue) {
+  return (yPred - yTrue).dot(yPred - yTrue) / yTrue.rows();
 }
 
-}  // namespace neural_network
+Vector LossFunction::funcGrad(const Vector& yPred, const Vector& yTrue) {
+  return (yPred - yTrue) * 2;
+}
+
+}  // namespace neural_network 

@@ -2,38 +2,46 @@
 
 namespace neural_network {
 
-Layer::Layer(int n, int m) {
-  a = MatrixXd(m, n);
-  b = VectorXd(m);
-
-  std::default_random_engine generator;
-  std::normal_distribution<double> distribution(0.0, 1.0);
-
-  for (int i = 0; i < a.rows(); ++i) {
-    for (int j = 0; j < a.cols(); ++j) {
-      a(i, j) = distribution(generator);
-    }
-    b(i) = distribution(generator);
-  }
+Layer::Layer(int in, int out) : a_(getDefaultA(out, in)), b_(getDefaultB(out)) {
 }
 
-VectorXd Layer::evaluate(VectorXd x) { return Sigma::evaluate(a * x + b); }
-
-MatrixXd Layer::gradA(VectorXd x, VectorXd u) {
-  return Sigma::evaluateDerivative(a * x + b).asDiagonal() * u * x.transpose();
+Eigen::Rand::P8_mt19937_64& Layer::randGen() {
+  static Eigen::Rand::P8_mt19937_64 r;
+  return r;
 }
 
-VectorXd Layer::gradB(VectorXd x, VectorXd u) {
-  return Sigma::evaluateDerivative(a * x + b).asDiagonal() * u;
+Matrix Layer::getNormalRandMatrix(Index rows, Index cols) {
+  Eigen::Rand::NormalGen<double> norm_gen{normalDistributionParam1, normalDistributiomParam2};
+  return norm_gen.generate<Matrix>(rows, cols, Layer::randGen());
 }
 
-VectorXd Layer::evaluateU(VectorXd x, VectorXd u) {
-  return u.transpose() * Sigma::evaluateDerivative(a * x + b).asDiagonal() * a;
+Matrix Layer::getDefaultA(Index rows, Index cols) {
+  return Layer::getNormalRandMatrix(rows, cols);
 }
 
-void Layer::shift(VectorXd x, VectorXd u) {
-  a -= learningRate * gradA(x, u);
-  b -= learningRate * gradB(x, u);
+Vector Layer::getDefaultB(Index cols) {
+  return Layer::getNormalRandMatrix(cols, 1);
+}
+
+Matrix Layer::gradA(const Vector& x, const Vector& u) const {
+  return Sigma::evaluateDerivative(a_ * x + b_).asDiagonal() * u * x.transpose();
+}
+
+Vector Layer::gradB(const Vector& x, const Vector& u) const {
+  return Sigma::evaluateDerivative(a_ * x + b_).asDiagonal() * u;
+}
+
+Vector Layer::evaluate(const Vector& x) const {
+  return Sigma::evaluate(a_ * x + b_);
+}
+
+Vector Layer::evaluateU(const Vector& x, const Vector& u) const {
+  return u.transpose() * Sigma::evaluateDerivative(a_ * x + b_).asDiagonal() * a_;
+}
+
+void Layer::shift(const Vector& x, const Vector& u) {
+  a_ -= learningRate * gradA(x, u);
+  b_ -= learningRate * gradB(x, u);
 }
 
 }  // namespace neural_network
