@@ -3,15 +3,19 @@
 #include "load_data.h"
 #include "network.h"
 
-int main() {
-  const int pixelsCount = 28;
-  const int startLayerLength = pixelsCount * pixelsCount;
-  std::vector<int> layerLengths = {startLayerLength, 16, 10};
-  neural_network::NeuralNetwork network = neural_network::NeuralNetwork(
-      layerLengths, 60000,
-      neural_network::LoadData::getStartLayerValues("../mnist/mnist_train.csv", startLayerLength),
-      neural_network::LoadData::getStartLayerValues("../mnist/mnist_test.csv", startLayerLength));
+using neural_network::Index;
+using neural_network::LoadData;
+using neural_network::NeuralNetwork;
 
-  network.train();
-  network.test();
+int main() {
+  constexpr Index pixelsCount = 28;
+  constexpr Index startLayerLength = pixelsCount * pixelsCount;
+  std::vector<Index> layerLengths = {startLayerLength, 16, 10};
+  NeuralNetwork network = NeuralNetwork(layerLengths);
+  network.train(LoadData::read("../mnist/mnist_train.csv"), 1);
+  network.test(LoadData::read("../mnist/mnist_test.csv"));
+
+  // const neural_network::Data testData = LoadData::read("../mnist/mnist_test.csv");
+  // std::vector<neural_network::Vector> layerValues = network.getLayerValues(testData.input.row(0));
+  // std::cout << layerValues[2] << std::endl;
 }

@@ -2,56 +2,50 @@
 
 namespace neural_network {
 
-NeuralNetwork::NeuralNetwork(const std::vector<int>& layerLengths, int epochs,
-                             const std::vector<Data>& trainData,
-                             const std::vector<Data>& testData) {
-  layers_.resize(layerLengths.size() - 1);
+NeuralNetwork::NeuralNetwork(const std::vector<Index>& layerLengths) {
   for (int i = 0; i < layerLengths.size() - 1; ++i) {
-    layers_[i] = Layer(layerLengths[i], layerLengths[i + 1]);
+    layers_.emplace_back(Layer(layerLengths[i], layerLengths[i + 1]));
   }
-
-  epochs_ = epochs;
-  trainData_ = trainData;
-  testData_ = testData;
 }
 
-void NeuralNetwork::train() {
-  for (int i = 0; i < trainData_.size(); ++i) {
-    if (i >= epochs_) {
-      break;
-    }
-
-    Vector startLayerValues = trainData_[i].pixels;
-    int ans = trainData_[i].answer;
-    Vector ansVector = Vector::Zero(10);
-    ansVector[ans] = 1;
-
-    std::vector<Vector> layerValues = std::vector<Vector>(layers_.size() + 1);
-    layerValues[0] = startLayerValues;
-
-    for (int i = 0; i < layers_.size(); ++i) {
-      layerValues[i + 1] = layers_[i].evaluate(layerValues[i]);
-    }
-
-    Vector lastLayerU = LossFunction::evaluateGrad(layerValues[layers_.size()], ansVector);
-
-    Matrix currentU = lastLayerU;
-    for (int i = layers_.size() - 1; i >= 0; --i) {
-      layers_[i].shift(layerValues[i], currentU);
-      currentU = layers_[i].evaluateU(layerValues[i], currentU);
+void NeuralNetwork::train(const Data& trainData, Index epochs) {
+  for (int epoch = 0; epoch < epochs; ++epoch) {
+    for (int i = 0; i < trainData.answer.size(); ++i) {
+      std::vector<Vector> layerValues = getLayerValues(trainData.input.row(i));
+      backPropagation(layerValues, trainData.answer(i));
     }
   }
 }
 
-void NeuralNetwork::test() {
+std::vector<Vector> NeuralNetwork::getLayerValues(const Matrix::ConstRowXpr& firstLayerValues) {
+  std::vector<Vector> layerValues(layers_.size() + 1);
+  layerValues[0] = firstLayerValues;
+  for (int i = 0; i < layers_.size(); ++i) {
+    layerValues[i + 1] = layers_[i].evaluate(layerValues[i]);
+  }
+  return layerValues;
+}
+
+void NeuralNetwork::backPropagation(std::vector<Vector>& layerValues, Index answer) {
+  Vector ansVector = Vector::Zero(10);
+  ansVector[answer] = 1;
+  Vector lastLayerU = LossFunction::evaluateGrad(layerValues[layers_.size()], ansVector);
+
+  Matrix currentU = lastLayerU;
+  for (int i = layers_.size() - 1; i >= 0; --i) {
+    layers_[i].shift(layerValues[i], currentU);
+    currentU = layers_[i].evaluateU(layerValues[i], currentU);
+  }
+}
+
+void NeuralNetwork::test(const Data& testData) {
   int rightAnswersCount = 0;
-  for (int i = 0; i < testData_.size(); ++i) {
-    Vector startLayerValues = testData_[i].pixels;
-    int ans = testData_[i].answer;
+  for (int i = 0; i < testData.answer.size(); ++i) {
+    int ans = testData.answer(i);
     Vector ansVector = Vector::Zero(10);
     ansVector[ans] = 1;
 
-    Vector currentLayerValues = startLayerValues;
+    Vector currentLayerValues = testData.input.row(i);
     for (int i = 0; i < layers_.size(); ++i) {
       currentLayerValues = layers_[i].evaluate(currentLayerValues);
     }
@@ -65,9 +59,9 @@ void NeuralNetwork::test() {
   }
 
   std::cout << "correct: " << rightAnswersCount << std::endl;
-  std::cout << "all: " << testData_.size() << std::endl;
+  std::cout << "all: " << testData.answer.size() << std::endl;
 
-  std::cout << "percent: " << rightAnswersCount * 1.0 / testData_.size() * 100 << std::endl;
+  std::cout << "percent: " << rightAnswersCount * 1.0 / testData.answer.size() * 100 << std::endl;
 }
 
 }  // namespace neural_network

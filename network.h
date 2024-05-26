@@ -10,17 +10,14 @@ namespace neural_network {
 
 class NeuralNetwork {
  private:
-  int epochs_;
   std::vector<Layer> layers_;
-  std::vector<Data> trainData_;
-  std::vector<Data> testData_;
+  void backPropagation(std::vector<Vector>& layerValues, Index answer);
 
  public:
-  NeuralNetwork(const std::vector<int>& layerLenghts, int epochs,
-                const std::vector<Data>& trainData, const std::vector<Data>& testData);
-
-  void train();
-  void test();
+  NeuralNetwork(const std::vector<Index>& layerLenghts);
+  void train(const Data& trainData, Index epochs);
+  std::vector<Vector> getLayerValues(const Matrix::ConstRowXpr& firstLayerValues);
+  void test(const Data& testData);
 };
 
 }  // namespace neural_network

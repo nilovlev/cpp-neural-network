@@ -23,7 +23,6 @@ class Layer {
   Vector gradB(const Vector& x, const Vector& u) const;
 
  public:
-  Layer() = default;
   Layer(int n, int m);
   Vector evaluate(const Vector& x) const;
   Vector evaluateU(const Vector& x, const Vector& u) const;

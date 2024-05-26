@@ -10,13 +10,13 @@
 namespace neural_network {
 
 struct Data {
-  Vector pixels;
-  int answer;
+  Matrix input;
+  Vector answer;
 };
 
 class LoadData {
  public:
-  static std::vector<Data> getStartLayerValues(const std::string& fileName, int startLayerLength);
+  static Data read(const std::string& filePath);
 };
 
 }  // namespace neural_network

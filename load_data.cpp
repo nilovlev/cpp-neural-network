@@ -2,34 +2,33 @@
 
 namespace neural_network {
 
-std::vector<Data> LoadData::getStartLayerValues(const std::string& fileName, int startLayerLength) {
-  std::vector<Data> res = std::vector<Data>();
-  std::ifstream file(fileName);
-  std::string line, val;
-
+Data LoadData::read(const std::string& filePath) {
+  std::ifstream file_(filePath);
+  std::string line;
+  std::getline(file_, line);
+  Index pixelCount = std::count(line.begin(), line.end(), ',');
+  Index pictureCount = 0;
+  while (std::getline(file_, line)) {
+    ++pictureCount;
+  }
+  Data res = {Matrix(pictureCount, pixelCount), Vector(pictureCount)};
+  std::ifstream file(filePath);
   std::getline(file, line);
 
+  Index pictureIndex = 0;
   while (std::getline(file, line)) {
-    Vector vector = Vector(startLayerLength);
     std::stringstream ss(line);
-
-    int index = -1;
-    int ans;
+    Index pixelIndex = 0;
+    std::string val;
+    std::getline(ss, val, ',');
+    res.answer(pictureIndex) = std::stoi(val);
     while (std::getline(ss, val, ',')) {
-      if (index == -1) {
-        ans = std::stoi(val);
-        ++index;
-        continue;
-      }
-
-      vector(index) = std::stod(val) / 255;
-      ++index;
+      res.input(pictureIndex, pixelIndex) = std::stod(val) / 255;
+      ++pixelIndex;
     }
-
-    res.push_back({vector, ans});
+    ++pictureIndex;
   }
 
-  file.close();
   return res;
 }
 
