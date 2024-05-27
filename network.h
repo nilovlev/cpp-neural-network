@@ -16,8 +16,7 @@ class NeuralNetwork {
  public:
   NeuralNetwork(const std::vector<Index>& layerLenghts, ActivationFunctionType funcType);
   void train(const Data& trainData, Index epochs, double learningRate);
-  std::vector<Vector> getLayerValues(const Matrix::ConstRowXpr& firstLayerValues);
-  void test(const Data& testData);
+  std::vector<Vector> getLayerValues(const Matrix::ConstRowXpr& firstLayerValues) const;
 };
 
 }  // namespace neural_network

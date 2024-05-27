@@ -17,7 +17,7 @@ void NeuralNetwork::train(const Data& trainData, Index epochs, double learningRa
   }
 }
 
-std::vector<Vector> NeuralNetwork::getLayerValues(const Matrix::ConstRowXpr& firstLayerValues) {
+std::vector<Vector> NeuralNetwork::getLayerValues(const Matrix::ConstRowXpr& firstLayerValues) const {
   std::vector<Vector> layerValues(layers_.size() + 1);
   layerValues[0] = firstLayerValues;
   for (int i = 0; i < layers_.size(); ++i) {
@@ -36,32 +36,6 @@ void NeuralNetwork::backPropagation(std::vector<Vector>& layerValues, Index answ
     layers_[i].shift(layerValues[i], currentU, learningRate);
     currentU = layers_[i].evaluateU(layerValues[i], currentU);
   }
-}
-
-void NeuralNetwork::test(const Data& testData) {
-  int rightAnswersCount = 0;
-  for (int i = 0; i < testData.answer.size(); ++i) {
-    int ans = testData.answer(i);
-    Vector ansVector = Vector::Zero(10);
-    ansVector[ans] = 1;
-
-    Vector currentLayerValues = testData.input.row(i);
-    for (int i = 0; i < layers_.size(); ++i) {
-      currentLayerValues = layers_[i].evaluate(currentLayerValues);
-    }
-
-    Index maxIndex;
-    currentLayerValues.maxCoeff(&maxIndex);
-
-    if (maxIndex == ans) {
-      ++rightAnswersCount;
-    }
-  }
-
-  std::cout << "correct: " << rightAnswersCount << std::endl;
-  std::cout << "all: " << testData.answer.size() << std::endl;
-
-  std::cout << "percent: " << rightAnswersCount * 1.0 / testData.answer.size() * 100 << std::endl;
 }
 
 }  // namespace neural_network
