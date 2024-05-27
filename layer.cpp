@@ -2,7 +2,8 @@
 
 namespace neural_network {
 
-Layer::Layer(int in, int out) : a_(getDefaultA(out, in)), b_(getDefaultB(out)) {
+Layer::Layer(Index in, Index out, ActivationFunction activationFunction)
+    : a_(getDefaultA(out, in)), b_(getDefaultB(out)), activationFunction_(std::move(activationFunction)) {
 }
 
 Eigen::Rand::P8_mt19937_64& Layer::randGen() {
@@ -24,22 +25,22 @@ Vector Layer::getDefaultB(Index cols) {
 }
 
 Matrix Layer::gradA(const Vector& x, const Vector& u) const {
-  return Sigma::evaluateDerivative(a_ * x + b_).asDiagonal() * u * x.transpose();
+  return activationFunction_.evaluateDerivative(a_ * x + b_).asDiagonal() * u * x.transpose();
 }
 
 Vector Layer::gradB(const Vector& x, const Vector& u) const {
-  return Sigma::evaluateDerivative(a_ * x + b_).asDiagonal() * u;
+  return activationFunction_.evaluateDerivative(a_ * x + b_).asDiagonal() * u;
 }
 
 Vector Layer::evaluate(const Vector& x) const {
-  return Sigma::evaluate(a_ * x + b_);
+  return activationFunction_.evaluate(a_ * x + b_);
 }
 
 Vector Layer::evaluateU(const Vector& x, const Vector& u) const {
-  return u.transpose() * Sigma::evaluateDerivative(a_ * x + b_).asDiagonal() * a_;
+  return u.transpose() * activationFunction_.evaluateDerivative(a_ * x + b_).asDiagonal() * a_;
 }
 
-void Layer::shift(const Vector& x, const Vector& u) {
+void Layer::shift(const Vector& x, const Vector& u, double learningRate) {
   a_ -= learningRate * gradA(x, u);
   b_ -= learningRate * gradB(x, u);
 }

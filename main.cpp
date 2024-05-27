@@ -11,8 +11,8 @@ int main() {
   constexpr Index pixelsCount = 28;
   constexpr Index startLayerLength = pixelsCount * pixelsCount;
   std::vector<Index> layerLengths = {startLayerLength, 16, 10};
-  NeuralNetwork network = NeuralNetwork(layerLengths);
-  network.train(LoadData::read("../mnist/mnist_train.csv"), 1);
+  NeuralNetwork network = NeuralNetwork(layerLengths, neural_network::ActivationFunctionType::Sigmoid);
+  network.train(LoadData::read("../mnist/mnist_train.csv"), 1, 0.2);
   network.test(LoadData::read("../mnist/mnist_test.csv"));
 
   // const neural_network::Data testData = LoadData::read("../mnist/mnist_test.csv");
