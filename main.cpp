@@ -32,7 +32,7 @@ void test(const Data& testData, const NeuralNetwork& network) {
 int main() {
   constexpr Index pixelsCount = 28;
   constexpr Index startLayerLength = pixelsCount * pixelsCount;
-  std::vector<Index> layerLengths = {startLayerLength, 16, 10};
+  std::vector<Index> layerLengths = {startLayerLength, 64, 16, 10};
   NeuralNetwork network = NeuralNetwork(layerLengths, ActivationFunctionType::Sigmoid);
   constexpr double defaultLearningRate = 0.2;
   constexpr int epochs = 1;
