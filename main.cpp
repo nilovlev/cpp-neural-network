@@ -26,7 +26,7 @@ void test(const Data& testData, const NeuralNetwork& network) {
 
   std::cout << "correct: " << rightAnswersCount << std::endl;
   std::cout << "all: " << testData.answer.size() << std::endl;
-  std::cout << "percent: " << rightAnswersCount * 1.0 / testData.answer.size() * 100 << std::endl;
+  std::cout << "accuracy: " << rightAnswersCount * 1.0 / testData.answer.size() * 100 << "%" << std::endl;
 }
 
 int main() {
