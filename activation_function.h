@@ -8,6 +8,12 @@ namespace neural_network {
 
 enum class ActivationFunctionType { Sigmoid, ReLU, Linear, TanH };
 
+class ActivationFunctionLib {
+ public:
+  static std::function<double(double)> getFunc(ActivationFunctionType funcType);
+  static std::function<double(double)> getFuncDerivative(ActivationFunctionType funcType);
+};
+
 class ActivationFunction {
  private:
   std::function<double(double)> func_;
