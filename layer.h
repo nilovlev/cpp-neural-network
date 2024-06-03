@@ -2,8 +2,9 @@
 
 #include <EigenRand/EigenRand>
 
-#include "common.h"
 #include "activation_function.h"
+#include "common.h"
+#include "rand.h"
 
 namespace neural_network {
 
@@ -12,10 +13,7 @@ class Layer {
   Matrix a_;
   Vector b_;
   ActivationFunction activationFunction_;
-  static constexpr double normalDistributionParam1 = 0.0;
-  static constexpr double normalDistributiomParam2 = 1.0;
-  static Eigen::Rand::P8_mt19937_64& randGen();
-  static Matrix getNormalRandMatrix(Index rows, Index cols);
+  static Rand rand;
   static Matrix getDefaultA(Index rows, Index cols);
   static Vector getDefaultB(Index cols);
   Matrix gradA(const Vector& x, const Vector& u) const;

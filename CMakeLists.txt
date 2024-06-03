@@ -9,4 +9,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 include_directories("eigen")
 include_directories("EigenRand")
 
-add_executable(Neural_Network activation_function.cpp layer.cpp load_data.cpp loss.cpp main.cpp network.cpp)
+add_executable(Neural_Network activation_function.cpp layer.cpp load_data.cpp loss.cpp main.cpp network.cpp rand.cpp)

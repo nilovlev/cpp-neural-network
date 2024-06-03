@@ -3,25 +3,17 @@
 namespace neural_network {
 
 Layer::Layer(Index in, Index out, ActivationFunction activationFunction)
-    : a_(getDefaultA(out, in)), b_(getDefaultB(out)), activationFunction_(std::move(activationFunction)) {
-}
-
-Eigen::Rand::P8_mt19937_64& Layer::randGen() {
-  static Eigen::Rand::P8_mt19937_64 r;
-  return r;
-}
-
-Matrix Layer::getNormalRandMatrix(Index rows, Index cols) {
-  Eigen::Rand::NormalGen<double> norm_gen{normalDistributionParam1, normalDistributiomParam2};
-  return norm_gen.generate<Matrix>(rows, cols, Layer::randGen());
+    : a_(getDefaultA(out, in)),
+      b_(getDefaultB(out)),
+      activationFunction_(std::move(activationFunction)) {
 }
 
 Matrix Layer::getDefaultA(Index rows, Index cols) {
-  return Layer::getNormalRandMatrix(rows, cols);
+  return rand.getNormalMatrix(rows, cols);
 }
 
 Vector Layer::getDefaultB(Index cols) {
-  return Layer::getNormalRandMatrix(cols, 1);
+  return rand.getNormalMatrix(cols, 1);
 }
 
 Matrix Layer::gradA(const Vector& x, const Vector& u) const {
