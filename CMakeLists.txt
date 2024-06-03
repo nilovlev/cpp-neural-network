@@ -9,6 +9,4 @@ set(CMAKE_CXX_STANDARD_REQUIRED True)
 include_directories("eigen")
 include_directories("EigenRand")
 
-file(GLOB SOURCES *.cpp)
-
-add_executable(Neural_Network ${SOURCES})
+add_executable(Neural_Network activation_function.cpp layer.cpp load_data.cpp loss.cpp main.cpp network.cpp)

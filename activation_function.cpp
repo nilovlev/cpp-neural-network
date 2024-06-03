@@ -4,8 +4,8 @@
 
 namespace neural_network {
 
-ActivationFunction::ActivationFunction(ActivationFunctionType func) {
-  switch (func) {
+ActivationFunction::ActivationFunction(ActivationFunctionType funcType) {
+  switch (funcType) {
     case ActivationFunctionType::Sigmoid:
       func_ = [](double x) { return 1.0 / (1.0 + exp(-x)); };
       funcDerivative_ = [](double x) { return (1.0 / (1.0 + exp(-x))) * (1.0 - (1.0 / (1.0 + exp(-x)))); };

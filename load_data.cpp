@@ -3,18 +3,19 @@
 namespace neural_network {
 
 Data LoadData::read(const std::string& filePath) {
-  std::ifstream file_(filePath);
+  std::ifstream file(filePath);
   std::string line;
-  std::getline(file_, line);
+  std::getline(file, line);
   Index pixelCount = std::count(line.begin(), line.end(), ',');
   Index pictureCount = 0;
-  while (std::getline(file_, line)) {
+  while (std::getline(file, line)) {
     ++pictureCount;
   }
   Data res = {Matrix(pictureCount, pixelCount), Vector(pictureCount)};
-  std::ifstream file(filePath);
+  file.clear();
+  file.seekg(0);
   std::getline(file, line);
-
+  
   Index pictureIndex = 0;
   while (std::getline(file, line)) {
     std::stringstream ss(line);

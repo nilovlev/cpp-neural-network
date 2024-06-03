@@ -11,10 +11,12 @@ namespace neural_network {
 class NeuralNetwork {
  private:
   std::vector<Layer> layers_;
-  void backPropagation(std::vector<Vector>& layerValues, Index answer, double learningRate);
+  void backPropagation(const std::vector<Vector>& layerValues, Index answer, double learningRate);
+  Vector convertToVector(Index answer);
 
  public:
-  NeuralNetwork(const std::vector<Index>& layerLenghts, ActivationFunctionType funcType);
+  NeuralNetwork(std::initializer_list<Index> layerLenghts,
+                std::initializer_list<ActivationFunctionType> layerFuncTypes);
   void train(const Data& trainData, Index epochs, double learningRate);
   std::vector<Vector> getLayerValues(const Matrix::ConstRowXpr& firstLayerValues) const;
 };

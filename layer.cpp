@@ -40,7 +40,7 @@ Vector Layer::evaluateU(const Vector& x, const Vector& u) const {
   return u.transpose() * activationFunction_.evaluateDerivative(a_ * x + b_).asDiagonal() * a_;
 }
 
-void Layer::shift(const Vector& x, const Vector& u, double learningRate) {
+void Layer::update(const Vector& x, const Vector& u, double learningRate) {
   a_ -= learningRate * gradA(x, u);
   b_ -= learningRate * gradB(x, u);
 }

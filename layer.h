@@ -25,7 +25,7 @@ class Layer {
   Layer(Index in, Index out, ActivationFunction activationFunction);
   Vector evaluate(const Vector& x) const;
   Vector evaluateU(const Vector& x, const Vector& u) const;
-  void shift(const Vector& x, const Vector& u, double learningRate);
+  void update(const Vector& x, const Vector& u, double learningRate);
 };
 
 }  // namespace neural_network

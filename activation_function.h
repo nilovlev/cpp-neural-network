@@ -14,7 +14,7 @@ class ActivationFunction {
   std::function<double(double)> funcDerivative_;
 
  public:
-  ActivationFunction(ActivationFunctionType func);
+  ActivationFunction(ActivationFunctionType funcType);
   Vector evaluate(const Vector& x) const;
   Vector evaluateDerivative(const Vector& x) const;
 };
