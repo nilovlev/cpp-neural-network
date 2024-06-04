@@ -8,8 +8,8 @@ Eigen::Rand::P8_mt19937_64& Rand::generator() {
 }
 
 Matrix Rand::getNormalMatrix(Index rows, Index cols) {
-  Eigen::Rand::NormalGen<double> norm_gen{normalDistributionParam1, normalDistributiomParam2};
-  return norm_gen.generate<Matrix>(rows, cols, generator());
+  Eigen::Rand::NormalGen<double> normGen{normalDistributionParam1, normalDistributiomParam2};
+  return normGen.generate<Matrix>(rows, cols, generator());
 }
 
 }  // namespace neural_network

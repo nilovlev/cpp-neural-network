@@ -24,7 +24,7 @@ NeuralNetwork::NeuralNetwork(std::initializer_list<Index> layerLengths,
                              std::initializer_list<ActivationFunctionType> layerFuncTypes) {
   std::initializer_list<Index>::iterator lengthIterator = layerLengths.begin();
   std::initializer_list<ActivationFunctionType>::iterator funcTypeIterator = layerFuncTypes.begin();
-  Index prevLayerLength = *layerLengths.begin();
+  Index prevLayerLength = *lengthIterator;
   ++lengthIterator;
   for (; lengthIterator != layerLengths.end() && funcTypeIterator != layerFuncTypes.end();
        ++lengthIterator, ++funcTypeIterator) {
